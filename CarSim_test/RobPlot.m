@@ -43,7 +43,8 @@ if isempty(grahnd)
     rrw = plot(rrwcod(:,1),rrwcod(:,2),'linewidth',thick,'color','b');
     lfw = plot(lfwcod(:,1),lfwcod(:,2),'linewidth',thick,'color',[1,0.9,0]);
     rfw = plot(rfwcod(:,1),rfwcod(:,2),'linewidth',thick,'color',[1,0.9,0]);
-    grahnd = [origin,body,rear,front,lrw,rrw,lfw,rfw];
+    direc = quiver(x,y,L*cos(theta),L*sin(theta),'color','c');
+    grahnd = [origin,body,rear,front,lrw,rrw,lfw,rfw,direc];
 else
     figure(figind);
     origin = grahnd(1);
@@ -54,6 +55,7 @@ else
     rrw = grahnd(6);
     lfw = grahnd(7);
     rfw = grahnd(8);
+    direc = grahnd(9);
     set(origin,'XData',x,'YData',y);
     set(body,'XData',axiscod(:,1),'YData',axiscod(:,2));
     set(rear,'XData',rearcod(:,1),'YData',rearcod(:,2));
@@ -62,9 +64,12 @@ else
     set(rrw,'XData',rrwcod(:,1),'YData',rrwcod(:,2));
     set(lfw,'XData',lfwcod(:,1),'YData',lfwcod(:,2));
     set(rfw,'XData',rfwcod(:,1),'YData',rfwcod(:,2));
+    set(direc,'xdata',x,'ydata',y,'udata',L*cos(theta),'vdata',L*sin(theta));
 end
-xlim([-0.2,12]);
-ylim([-1,4]);
+% xlim([-0.2,12]);
+% ylim([-1,4]);
+xlim([-0.2,1]);
+ylim([-0.5,0.5]);
     
 
 

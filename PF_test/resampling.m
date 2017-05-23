@@ -15,6 +15,10 @@ for i=1:N
     cnts(i) = sum((sample>=wbin(i))&(sample<wbin(i+1)));
 end
 inds=[];
+if sum(cnts)<N
+    return;
+end
+
 for i=1:N
     for j=1:cnts(i)
         inds=[inds,i];
