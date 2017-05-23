@@ -29,7 +29,7 @@ end
 
 X = X(inds,:);
 
-X = X + randn(N,dimout)*dist;
+% X = X + randn(N,dimout)*dist;
 
 
 

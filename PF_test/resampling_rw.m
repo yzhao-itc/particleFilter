@@ -11,7 +11,7 @@ N = length(w);
 
 X = X(sum( bsxfun(@ge, rand(N,1), cumsum(w./sum(w))), 2) + 1,:);
 
-X = X + randn(N,dimout)*dist;
+% X = X + randn(N,dimout)*dist;
 
 
 

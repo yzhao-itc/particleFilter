@@ -2,14 +2,12 @@ clear;clc;clf;
 % initialize random generator
 rng('shuffle');
 addpath('PF_test','CarSim_test');
-global Q R gain Q2 R2;
-Q = diag([0.02,0.02,0.04,0.02]);
-R = diag([0.05,0.05,0.03]);
-Q2 = diag([0.2,0.2,0.4,0.2]);
-R2 = R;
-gain = [diag([1,1,1]);[1/3 1/3 1/3]];
+global Q R gain Q2;
+Q = diag([0.03,0.03,0.03,0.03])/3;
+R = diag([0.5,0.5,0.3])/10;
+Q2 = Q;
+gain = 0.8*[diag([1,1,1]);[0 0 0]];
 global dist;
-% dist = Q*3;
 dist = diag([0.01,0.01,0.01,0.01]);
 
 N = 30;
@@ -52,7 +50,7 @@ while simulationTime < timedue
     set(output,'XData',y(1),'YData',y(2));
     set(outdir,'xdata',y(1),'ydata',y(2),'udata',L*cos(y(3)),'vdata',L*sin(y(3)));
     % filter
-    X = PF(X,uCmd,y,@(x,u)DistDyn(x,u,L,dt),@MeasureProb);
+    X = PF(X,uCmd,y,@(x,u)RandDistDyn(x,u,L,dt),@MeasureProb);
 %     [X,w] = PF_proposalDen(X,uCmd,y,...
 %         @(xn,x,u)RandDistDynProb(xn,x,u,L,dt),...
 %         @(x,y,u)RandDistDyn_proposal(x,y,u,L,dt),...
