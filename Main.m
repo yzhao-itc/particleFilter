@@ -5,10 +5,10 @@ addpath('PF_test','CarSim_test');
 global Q R gain Q2;
 Q = diag([0.03,0.03,0.03,0.03])/3;
 R = diag([0.5,0.5,0.3])/10;
-Q2 = Q;
-gain = 0.8*[diag([1,1,1]);[0 0 0]];
+Q2 = Q*5;
+gain = 0.5*[diag([1,1,1]);[0 0 0]];
 global dist;
-dist = diag([0.01,0.01,0.01,0.01]);
+dist = Q;
 
 N = 30;
 X = randn(N,4)*diag([0.25,0.25,0.2,0.02]);
@@ -32,7 +32,6 @@ output = plot(y(1),y(2),'ro');
 outdir = quiver(y(1),y(2),L*cos(y(3)),L*sin(y(3)),'color','m');
 
 trj = plot(states(1,:),states(2,:),'color','r');
-w = ones(N,1)/N;
 
 measurement = [];
 filtered = [];
@@ -50,11 +49,11 @@ while simulationTime < timedue
     set(output,'XData',y(1),'YData',y(2));
     set(outdir,'xdata',y(1),'ydata',y(2),'udata',L*cos(y(3)),'vdata',L*sin(y(3)));
     % filter
-    X = PF(X,uCmd,y,@(x,u)RandDistDyn(x,u,L,dt),@MeasureProb);
-%     [X,w] = PF_proposalDen(X,uCmd,y,...
-%         @(xn,x,u)RandDistDynProb(xn,x,u,L,dt),...
-%         @(x,y,u)RandDistDyn_proposal(x,y,u,L,dt),...
-%         @MeasureProb,w);
+%     X = PF(X,uCmd,y,@(x,u)RandDistDyn(x,u,L,dt),@MeasureProb);
+    X = PF_proposalDen(X,uCmd,y,...
+        @(xn,x,u)RandDistDynProb(xn,x,u,L,dt),...
+        @(x,y,u)RandDistDyn_proposal(x,y,u,L,dt),...
+        @MeasureProb);
 %     for i=1:N
 %         X(i,:) = RandDistDyn_proposal(X(i,:),y,uCmd,L,dt);
 %     end

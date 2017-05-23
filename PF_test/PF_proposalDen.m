@@ -1,4 +1,4 @@
-function [ X_next, w ] = PF_proposalDen( X, U, y, f_prob, f_proposal, pmdl, w0 )
+function [ X_next ] = PF_proposalDen( X, U, y, f_prob, f_proposal, pmdl )
 %basic particle filter by basic importance sampling and stochastic
 %universal sampling for resampling
 %   model:
@@ -19,20 +19,19 @@ for i=1:N
     X_next(i,:) = temp(:).';
     p_pre = f_prob(X_next(i,:),X(i,:),U);
     p_post = pmdl(X_next(i,:),y);
-%     w(i) = p_post*p_pre/p_prop;
+    w(i) = p_post*p_pre/p_prop;
 %     w(i) = p_post*p_prop;
-    w(i) = p_post*p_pre/p_prop*w0(i);
-    post(i)=p_post;
-    prop(i)=p_prop;
-    pre(i)=p_pre;
+%     w(i) = p_post*p_pre/p_prop*w0(i);
+%     post(i)=p_post;
+%     prop(i)=p_prop;
+%     pre(i)=p_pre;
 end
 w = w/sum(w);
 if sum(w)<1-1e-4
     return;
 end
 
-% X_next = resampling(X,w);
-X_next = resampling_gaus(X,w);
+X_next = resampling(X_next,w);
 
 
 
