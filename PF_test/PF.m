@@ -23,7 +23,7 @@ if sum(w)<1-1e-4
     return;
 end
 
-X_next = resampling(X,w);
+X_next = resampling(X_next,w);
 
 
 

@@ -66,10 +66,10 @@ else
     set(rfw,'XData',rfwcod(:,1),'YData',rfwcod(:,2));
     set(direc,'xdata',x,'ydata',y,'udata',L*cos(theta),'vdata',L*sin(theta));
 end
-% xlim([-0.2,12]);
-% ylim([-1,4]);
-xlim([-0.2,1]);
-ylim([-0.5,0.5]);
+xlim([-0.2,12]);
+ylim([-1,4]);
+% xlim([-0.2,1]);
+% ylim([-0.5,0.5]);
     
 
 

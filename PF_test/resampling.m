@@ -3,6 +3,8 @@ function [ X ] = resampling( X, w )
 %   X - states samples (each row a sample)
 %   w - weights
 %   N - number of samples
+global dist;
+dimout = size(X,2);
 w = w(:);
 N = length(w);
 sample = rand/N + linspace(0,1,N+1);
@@ -26,6 +28,8 @@ for i=1:N
 end
 
 X = X(inds,:);
+
+X = X + randn(N,dimout)*dist;
 
 
 
