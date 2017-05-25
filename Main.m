@@ -20,7 +20,7 @@ filt = plot(filted(1),filted(2),'ks');
 dt = 0.05;
 initialPose = [0 0 0 0].';
 L = 0.25;
-timedue = 20;
+timedue = 10;
 
 simulationTime = 0;
 
@@ -49,11 +49,11 @@ while simulationTime < timedue
     set(output,'XData',y(1),'YData',y(2));
     set(outdir,'xdata',y(1),'ydata',y(2),'udata',L*cos(y(3)),'vdata',L*sin(y(3)));
     % filter
-%     X = PF(X,uCmd,y,@(x,u)RandDistDyn(x,u,L,dt),@MeasureProb);
-    X = PF_proposalDen(X,uCmd,y,...
-        @(xn,x,u)RandDistDynProb(xn,x,u,L,dt),...
-        @(x,y,u)RandDistDyn_proposal(x,y,u,L,dt),...
-        @MeasureProb);
+    X = PF(X,uCmd,y,@(x,u)RandDistDyn(x,u,L,dt),@MeasureProb);
+%     X = PF_proposalDen(X,uCmd,y,...
+%         @(xn,x,u)RandDistDynProb(xn,x,u,L,dt),...
+%         @(x,y,u)RandDistDyn_proposal(x,y,u,L,dt),...
+%         @MeasureProb);
 %     for i=1:N
 %         X(i,:) = RandDistDyn_proposal(X(i,:),y,uCmd,L,dt);
 %     end
